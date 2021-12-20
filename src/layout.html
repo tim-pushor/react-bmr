@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <title>Layout Development</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="layout.css" />
+
+    <style></style>
+  </head>
+  <body>
+    <header class="header">
+      <img src="assets/logo.png" />
+      <h1 class="header--text">Metabolic rate calculator</h1>
+    </header>
+    <section class="content">
+      <div class="content-left">
+        <div class="first-box">
+          <h1>Personal Information</h1>
+          <p>
+            Enter your information in the following form and then click
+            <strong>Calculate</strong>. If you do not know your bodyfat
+            percentage, leave that field blank.
+          </p>
+          <form>
+            <ul class="tabs">
+              <li class="tab-active">Metric Units</li>
+              <li class="tab-inactive">Imperial Units</li>
+            </ul>
+            <div class="tab-content">
+              <div class="form-line">
+                <span class="label">
+                  <label>Height:</label>
+                </span>
+                <input id="feet" class="inset" type="number" />
+                <label>ft</label>
+                <input id="inches" type="number" />
+                <label>in</label>
+              </div>
+              <div class="form-line">
+                <span class="label">
+                  <label>Weight:</label>
+                </span>
+                <input id="lbs" class="inset" type="number" />
+                <label>lbs</label>
+              </div>
+            </div>
+            <div class="non-tab-content">
+              <div class="form-line">
+                <span class="label">
+                  <label>Age:</label>
+                </span>
+                <input id="age" class="inset" type="number" />
+                <label>years</label>
+              </div>
+              <div class="form-line">
+                <span class="label">
+                  <label>Gender:</label>
+                </span>
+                <select id="gender" class="inset" name="gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="form-line">
+                <span class="label">
+                  <label>Bodyfat:</label>
+                </span>
+                <input id="bf" class="inset" type="number" />
+                <label>%</label>
+              </div>
+              <div class="form-line">
+                <span class="label">
+                  <label>Activity level:</label>
+                </span>
+                <select id="activity" class="inset" name="activity">
+                  <option value="1.2">Sedentary</option>
+                  <option value="1.375">Slightly active</option>
+                  <option value="1.425">Lightly active</option>
+                  <option value="1.55">Moderately active</option>
+                  <option value="1.75">Very active</option>
+                </select>
+              </div>
+              <div class="form-line form-line__activity">
+                <span class="label label__description">
+                  <label>Description:</label>
+                </span>
+                <span>
+                  Sedentary Lifestyle. Little to no exercise. Moderate walking.
+                  Desk Job (Away from home).
+                </span>
+              </div>
+            </div>
+            <div class="button">
+              <button type="submit">Calculate</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="content-right">
+        <div class="second-box">
+          <h1>Results</h1>
+          <p>
+            The following table displays the results of the BMR calculations
+            from the information that you entered. The first column is the name
+            of the algorithm. The second column is the base energy required
+            <em>while at rest</em>. The third column is the amount of energy
+            required adjusted for the activity level specified in the previous
+            section. Click the information (<img
+              class="info-image"
+              src="assets/infoicon.png"
+            />) icon for details on that particular algorithm. All numbers are
+            in kilocalories (kcal).
+          </p>
+          <p>
+            <strong>Note:</strong> some algorithms require a bodyfat
+            measurement. If you did not one, the calculations will show
+            <strong>N/A</strong>.
+          </p>
+          <table class="results">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Base BMR</th>
+                <th>Adjusted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <img src="assets/infoicon.png" />Harris-Benedict (Original
+                  1919)
+                </td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="assets/infoicon.png" />Harris-Benedict (Revised
+                  1984)
+                </td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+              <tr>
+                <td><img src="assets/infoicon.png" />Mifflin-St Jeor</td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+              <tr>
+                <td><img src="assets/infoicon.png" />Katch-McArdle</td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+              <tr>
+                <td><img src="assets/infoicon.png" />Katch-McArdle (hybrid)</td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+              <tr>
+                <td><img src="assets/infoicon.png" />Cunningham</td>
+                <td>2500.02</td>
+                <td>3500.02</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <p>BMR Calculator v0.1 - Copyright &copy;2021 <a href="https://www.linkedin.com/in/tim-pushor-ab501299/">Tim Pushor</a></p>
+        <p>Written in <a href="https://reactjs.org">React JS</a> - <a href="javascript:void(0);">Click here</a> to to see the code</p>
+      </div>
+    </footer>
+  </body>
+</html>
