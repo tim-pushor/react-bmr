@@ -1,0 +1,17 @@
+.header {
+    background-color: rgb(72, 70, 151);
+    vertical-align: middle;
+  }
+  .header img {
+    height: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+    vertical-align: middle;
+  }
+  .header h1 {
+    display: inline-block;
+    color: white;
+    font-family: "Readex Pro", sans-serif;
+    vertical-align: middle;
+  }
+  
