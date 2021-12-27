@@ -1,0 +1,7 @@
+.formrow {
+    padding: 5px 0 5px 0;
+  }
+  .formrow__activity {
+    height: 75px;
+    vertical-align: top;
+  }
