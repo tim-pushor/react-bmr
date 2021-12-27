@@ -1,0 +1,30 @@
+.content {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .content-left {
+    display: inline-block;
+    width: 49%;
+    margin: 0;
+    vertical-align: top;
+    padding: 0;
+  }
+  .content-left h1 {
+    margin: 0;
+    padding: 10px 0 10px 0;
+    text-align: center;
+  }
+  .content-right {
+    display: inline-block;
+    width: 49%;
+    margin: 0;
+    vertical-align: top;
+    padding: 0;
+  }
+  .content-right h1 {
+    margin: 0;
+    padding-top: 10px;
+    text-align: center;
+  }
+  
