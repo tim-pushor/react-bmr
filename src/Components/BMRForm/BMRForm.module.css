@@ -11,6 +11,11 @@
     background-color: rgb(94, 105, 102);
     color: white;
   }
+  .tab-inactive:hover {
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+  }
   
   .tab-active {
     display: inline-block;

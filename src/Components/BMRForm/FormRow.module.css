@@ -5,3 +5,9 @@
     height: 75px;
     vertical-align: top;
   }
+
+.label {
+    width: 125px;
+    display: inline-block;
+    text-align: right;
+  }
