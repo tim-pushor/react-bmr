@@ -11,3 +11,9 @@
     display: inline-block;
     text-align: right;
   }
+  .label__description {
+    height: 2em;
+    display: block;
+    float: left;
+    margin-right: 20px;
+  }

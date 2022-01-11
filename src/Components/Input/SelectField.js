@@ -8,7 +8,7 @@ const SelectField = (props) => {
         props.onUpdate(event.target.value);
     };
   return (
-    <select className={styles.input} name="activity">
+    <select className={styles.input} name="activity" onChange={changeHandler}>
       {props.data.map(x => <option value={x.value}>{x.desc}</option>)}
   </select>
   );
