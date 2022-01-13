@@ -41,3 +41,20 @@
     margin-top: -1px;
     padding: 10px;
   }
+  .button {
+    text-align: right;
+    padding-top: 10px;
+  }
+  .button > button {
+    font-family: "Readex Pro", sans-serif;
+    font-size: 15px;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: white;
+  }
+  .button > button:active,
+  .button > button:hover {
+    background-color: rgb(94, 105, 102);
+    color: white;
+  }

@@ -13,7 +13,9 @@ const BMRForm = () => {
   const [isImperial, setIsImperial] = useState(true);
   const [modifierDescription, setModifierDescription] = useState(
     BMR.modifiers[BMR.get_modifiers()[0]].desc
-  )
+  );
+  const [isValid, setIsValid] = useState(false);
+
   let years;
 
   const imperialTabClass = isImperial
@@ -35,6 +37,7 @@ const BMRForm = () => {
   };
   const metricStatsHandler = (data) => {};
   const yearsHandler = (value) => {
+    setIsValid(true);
     console.log(`years: ${value}`);
   };
   const genderHandler = (value) => {
@@ -45,10 +48,10 @@ const BMRForm = () => {
     { value: "0", desc: "Male" },
     { value: "1", desc: "Female" },
   ];
-const activityLevelHandler = (data) => {
-  console.log(`activity level: ${data}`);
-  setModifierDescription(BMR.modifiers[data].desc);
-};
+  const activityLevelHandler = (data) => {
+    console.log(`activity level: ${data}`);
+    setModifierDescription(BMR.modifiers[data].desc);
+  };
   const modifiers = BMR.get_modifiers().map((X) => {
     return { value: X, desc: X };
   });
@@ -78,11 +81,14 @@ const activityLevelHandler = (data) => {
           <InputField label="%" />
         </FormRow>
         <FormRow label="Activity level:">
-          <SelectField data={modifiers} onUpdate={activityLevelHandler}/>
+          <SelectField data={modifiers} onUpdate={activityLevelHandler} />
         </FormRow>
         <FormRow activity={true} label="Description:">
           <span>{modifierDescription}</span>
         </FormRow>
+      </div>
+      <div className={styles.button}>
+        <button disabled={!isValid} type="submit">Calculate</button>
       </div>
     </form>
   );
