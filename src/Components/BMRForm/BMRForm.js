@@ -7,10 +7,12 @@ import SelectField from "../Input/SelectField";
 
 import styles from "./BMRForm.module.css";
 
+const debugForm = false;
+
 const defaultFormState = {
   formIsValid: false,
   isImperial: false,
-  gender: BMR.genders[BMR.get_genders()[0]],
+  gender: BMR.get_genders()[0],
   activityLevel: BMR.get_modifiers()[0],
   activityDesc: BMR.modifiers[BMR.get_modifiers()[0]].desc,
   age: "",
@@ -93,8 +95,8 @@ const validateBodyfat = (value) => {
 };
 
 const validateForm = (obj) => {
-  console.log("Validating form");
-  console.log(obj);
+  // console.log("Validating form");
+  // console.log(obj);
   if (obj.ageIsValid && obj.bodyfatIsValid) {
     if (obj.isImperial) {
       if (obj.poundsIsValid && obj.inchesIsValid && obj.feetIsValid) {
@@ -110,7 +112,9 @@ const validateForm = (obj) => {
 };
 
 const formReducer = (state, action) => {
-  // console.log(action);
+  if (debugForm) {
+    console.log(action);
+  }
   let newstate;
   switch (action.type) {
     case "VALIDATE_FIELDS": {
@@ -287,16 +291,16 @@ const BMRForm = () => {
     ? styles["tab-inactive"]
     : styles["tab-active"];
 
-  // console.log(formState);
-
+  if (debugForm) {
+    console.log(formState);
+  }
   const submitHandler = (event) => {
     event.preventDefault();
-    if (!formState.formIsValid) {
-      console.log("Invalid")
-      dispatchForm({ type: "VALIDATE_FIELDS" });
+    if (formState.formIsValid) {
+      console.log("DO IT!");
     } else {
-      console.log("Do it!");
-      console.log(formState);
+      console.log("Invalid");
+      dispatchForm({ type: "VALIDATE_FIELDS" });
     }
   };
 
@@ -410,7 +414,7 @@ const BMRForm = () => {
         <FormRow label="Gender:">
           <SelectField
             data={BMR.get_genders().map((X) => {
-              return { value: BMR.genders[X], desc: X };
+              return { value: X, desc: X };
             })}
             onUpdate={(value) => {
               dispatchForm({ type: "SET_GENDER", value: value });
