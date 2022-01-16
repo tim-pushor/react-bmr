@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import { BMR } from "../../lib/bmrlib.js";
 
 import FormRow from "./FormRow";
@@ -6,8 +6,9 @@ import InputField from "../Input/InputField";
 import SelectField from "../Input/SelectField";
 
 import styles from "./BMRForm.module.css";
+import ResultsContext from "../../store/results-context.js";
 
-const debugForm = false;
+const debugForm = true;
 
 const defaultFormState = {
   formIsValid: false,
@@ -283,6 +284,7 @@ const formReducer = (state, action) => {
 
 const BMRForm = () => {
   const [formState, dispatchForm] = useReducer(formReducer, defaultFormState);
+  const ctx = useContext(ResultsContext);
 
   const imperialTabClass = formState.isImperial
     ? styles["tab-active"]
@@ -297,7 +299,40 @@ const BMRForm = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (formState.formIsValid) {
+      let data, bodyfatname, desc_base;
+
+      if (formState.bodyfat === "") {
+        bodyfatname = "unspecified";
+      } else {
+        bodyfatname = `${formState.bodyfat}%`;
+      }
+
+      desc_base = `${formState.age} year old ${formState.gender} with ${bodyfatname} bodyfat and ${formState.activityLevel} Activity Level `;
+
+      data = {
+        isMale: formState.gender === "Male",
+        bodyfat: formState.bodyfat,
+        age: formState.age,
+        modifier: BMR.modifiers[formState.activityLevel].value,
+      };
+      if (formState.isImperial) {
+        data = {
+          ...data,
+          height: formState.feet * 30.48 + formState.inches * 2.54,
+          weight: formState.pounds * 0.453592,
+          tag: `${formState.feet}'${formState.inches}'' ${formState.pounds}lb ${desc_base}`,
+        };
+      } else {
+        data = {
+          ...data,
+          height: formState.cm,
+          weight: formState.kg,
+          tag: `${formState.cm}cm ${formState.kg}kg ${desc_base}`,
+        };
+      }
       console.log("DO IT!");
+      console.log(data);
+      ctx.update(data);
     } else {
       console.log("Invalid");
       dispatchForm({ type: "VALIDATE_FIELDS" });
