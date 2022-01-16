@@ -1,4 +1,11 @@
 export const BMR  = {
+  genders: {
+    Male: "0",
+    Female: "1"
+  },
+  get_genders: () => {
+    return Object.keys(BMR.genders).sort();
+  },
   modifiers: {
     Sedentary: { value: 1.2, desc: "little or no exercise, desk job" },
     "Slightly active": {
@@ -37,6 +44,6 @@ export const BMR  = {
     },
   },
   get_functions: () => {
-    return Object.keys(BMR.functions).sort((a,b) => BMR.modifiers[a].value - BMR.modifiers[b].value);
+    return Object.keys(BMR.functions).sort((a,b) => BMR.modifiers[a].order - BMR.modifiers[b].order);
   },
 };

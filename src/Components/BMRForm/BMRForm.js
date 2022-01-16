@@ -8,8 +8,9 @@ import SelectField from "../Input/SelectField";
 import styles from "./BMRForm.module.css";
 
 const defaultFormState = {
+  formIsValid: false,
   isImperial: false,
-  gender: "Male",
+  gender: BMR.genders[BMR.get_genders()[0]],
   activityLevel: BMR.get_modifiers()[0],
   activityDesc: BMR.modifiers[BMR.get_modifiers()[0]].desc,
   age: "",
@@ -92,7 +93,7 @@ const validateBodyfat = (value) => {
 };
 
 const validateForm = (obj) => {
-  console.log('Validating form');
+  console.log("Validating form");
   console.log(obj);
   if (obj.ageIsValid && obj.bodyfatIsValid) {
     if (obj.isImperial) {
@@ -109,9 +110,30 @@ const validateForm = (obj) => {
 };
 
 const formReducer = (state, action) => {
-  console.log(action);
+  // console.log(action);
   let newstate;
   switch (action.type) {
+    case "VALIDATE_FIELDS": {
+      if (state.isImperial) {
+        newstate = {
+          ...state,
+          ageIsValid: validateAge(state.age),
+          bodyfatIsValid: validateBodyfat(state.bodyfat),
+          poundsIsValid: validatePounds(state.pounds),
+          inchesIsValid: validateInches(state.inches),
+          feetIsValid: validateFeet(state.feet),
+        };
+      } else {
+        newstate = {
+          ...state,
+          ageIsValid: validateAge(state.age),
+          bodyfatIsValid: validateBodyfat(state.bodyfat),
+          cmIsValid: validateCm(state.cm),
+          kgIsValid: validateKg(state.kg),
+        };
+      }
+      break;
+    }
     case "SET_AGE": {
       newstate = {
         ...state,
@@ -123,7 +145,7 @@ const formReducer = (state, action) => {
     case "AGE_BLUR": {
       newstate = {
         ...state,
-        ageIsValid: validateAge(action.value),
+        ageIsValid: validateAge(state.age),
       };
       break;
     }
@@ -138,7 +160,7 @@ const formReducer = (state, action) => {
     case "KG_BLUR": {
       newstate = {
         ...state,
-        kgIsValid: validateKg(action.value),
+        kgIsValid: validateKg(state.kg),
       };
       break;
     }
@@ -153,7 +175,7 @@ const formReducer = (state, action) => {
     case "POUNDS_BLUR": {
       newstate = {
         ...state,
-        poundsIsValid: validatePounds(action.value),
+        poundsIsValid: validatePounds(state.pounds),
       };
       break;
     }
@@ -169,7 +191,7 @@ const formReducer = (state, action) => {
     case "CM_BLUR": {
       newstate = {
         ...state,
-        cmIsValid: validateCm(action.value),
+        cmIsValid: validateCm(state.cm),
       };
       break;
     }
@@ -184,7 +206,7 @@ const formReducer = (state, action) => {
     case "INCHES_BLUR": {
       newstate = {
         ...state,
-        inchesIsValid: validateInches(action.value),
+        inchesIsValid: validateInches(state.inches),
       };
       break;
     }
@@ -199,11 +221,11 @@ const formReducer = (state, action) => {
     case "FEET_BLUR": {
       newstate = {
         ...state,
-        feetIsValid: validateFeet(action.value),
+        feetIsValid: validateFeet(state.feet),
       };
       break;
     }
-   case "SET_BODYFAT": {
+    case "SET_BODYFAT": {
       newstate = {
         ...state,
         bodyfat: action.value,
@@ -222,7 +244,7 @@ const formReducer = (state, action) => {
     case "BODYFAT_BLUR": {
       newstate = {
         ...state,
-        bodyfatIsValid: validateBodyfat(action.value),
+        bodyfatIsValid: validateBodyfat(state.bodyfat),
       };
       break;
     }
@@ -237,6 +259,13 @@ const formReducer = (state, action) => {
       newstate = {
         ...state,
         isImperial: false,
+      };
+      break;
+    }
+    case "SET_GENDER": {
+      newstate = {
+        ...state,
+        gender: action.value,
       };
       break;
     }
@@ -258,19 +287,21 @@ const BMRForm = () => {
     ? styles["tab-inactive"]
     : styles["tab-active"];
 
-  const genderHandler = (value) => {
-    console.log(`gender: ${value}`);
+  // console.log(formState);
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    if (!formState.formIsValid) {
+      console.log("Invalid")
+      dispatchForm({ type: "VALIDATE_FIELDS" });
+    } else {
+      console.log("Do it!");
+      console.log(formState);
+    }
   };
 
-  const genders = [
-    { value: "0", desc: "Male" },
-    { value: "1", desc: "Female" },
-  ];
-
-  console.log(formState);
-
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <ul className={styles.tabs}>
         <li
           className={imperialTabClass}
@@ -298,12 +329,22 @@ const BMRForm = () => {
                 onUpdate={(value) => {
                   dispatchForm({ type: "SET_FEET", value: value });
                 }}
+                onBlur={() => {
+                  dispatchForm({ type: "FEET_BLUR" });
+                }}
+                value={formState.feet}
+                isValid={formState.feetIsValid}
               />
               <InputField
                 label="in"
                 onUpdate={(value) => {
                   dispatchForm({ type: "SET_INCHES", value: value });
                 }}
+                onBlur={() => {
+                  dispatchForm({ type: "INCHES_BLUR" });
+                }}
+                value={formState.inches}
+                isValid={formState.inchesIsValid}
               />
             </FormRow>
             <FormRow label="Weight:">
@@ -312,6 +353,11 @@ const BMRForm = () => {
                 onUpdate={(value) => {
                   dispatchForm({ type: "SET_POUNDS", value: value });
                 }}
+                onBlur={() => {
+                  dispatchForm({ type: "POUNDS_BLUR" });
+                }}
+                value={formState.pounds}
+                isValid={formState.poundsIsValid}
               />
             </FormRow>
           </React.Fragment>
@@ -324,6 +370,11 @@ const BMRForm = () => {
                 onUpdate={(value) => {
                   dispatchForm({ type: "SET_CM", value: value });
                 }}
+                onBlur={() => {
+                  dispatchForm({ type: "CM_BLUR" });
+                }}
+                value={formState.cm}
+                isValid={formState.cmIsValid}
               />
             </FormRow>
             <FormRow label="Weight:">
@@ -332,6 +383,11 @@ const BMRForm = () => {
                 onUpdate={(value) => {
                   dispatchForm({ type: "SET_KG", value: value });
                 }}
+                onBlur={() => {
+                  dispatchForm({ type: "KG_BLUR" });
+                }}
+                value={formState.kg}
+                isValid={formState.kgIsValid}
               />
             </FormRow>
           </React.Fragment>
@@ -344,11 +400,23 @@ const BMRForm = () => {
             onUpdate={(value) => {
               dispatchForm({ type: "SET_AGE", value: value });
             }}
+            onBlur={() => {
+              dispatchForm({ type: "AGE_BLUR" });
+            }}
             value={formState.age}
+            isValid={formState.ageIsValid}
           />
         </FormRow>
         <FormRow label="Gender:">
-          <SelectField data={genders} onUpdate={genderHandler} />
+          <SelectField
+            data={BMR.get_genders().map((X) => {
+              return { value: BMR.genders[X], desc: X };
+            })}
+            onUpdate={(value) => {
+              dispatchForm({ type: "SET_GENDER", value: value });
+            }}
+            value={formState.gender}
+          />
         </FormRow>
         <FormRow label="Bodyfat:">
           <InputField
@@ -356,7 +424,11 @@ const BMRForm = () => {
             onUpdate={(value) => {
               dispatchForm({ type: "SET_BODYFAT", value: value });
             }}
+            onBlur={() => {
+              dispatchForm({ type: "BODYFAT_BLUR" });
+            }}
             value={formState.bodyfat}
+            isValid={formState.bodyfatIsValid}
           />
         </FormRow>
         <FormRow label="Activity level:">

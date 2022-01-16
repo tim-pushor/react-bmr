@@ -4,12 +4,24 @@ import styles from "./InputField.module.css";
 
 const InputField = (props) => {
 
-    const changeHandler = (event) => {
-        props.onUpdate(event.target.value);
-    };
+  let inputClass;
+
+  if (props.isValid === false) {
+    inputClass=`${styles.input} ${styles.invalid}`
+  } else {
+    inputClass=styles.input;
+  }
   return (
     <React.Fragment>
-      <input onChange={changeHandler} className={styles.input} type="number"/>
+      <input
+        onChange={(event) => {
+          props.onUpdate(event.target.value);
+        }}
+        onBlur={() => {props.onBlur();}}
+        value={props.value}
+        className={inputClass}
+        type="number"
+      />
       <label>{props.label}</label>
     </React.Fragment>
   );
