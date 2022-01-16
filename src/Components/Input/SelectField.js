@@ -9,7 +9,7 @@ const SelectField = (props) => {
     };
   return (
     <select className={styles.input} name="activity" onChange={changeHandler}>
-      {props.data.map(x => <option value={x.value}>{x.desc}</option>)}
+      {props.data.map(x => <option key={x.desc} value={x.value}>{x.desc}</option>)}
   </select>
   );
 };
