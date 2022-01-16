@@ -1,45 +1,263 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { BMR } from "../../lib/bmrlib.js";
 
 import FormRow from "./FormRow";
 import InputField from "../Input/InputField";
 import SelectField from "../Input/SelectField";
-import Imperial from "./Imperial";
-import Metric from "./Metric";
 
 import styles from "./BMRForm.module.css";
 
+const defaultFormState = {
+  isImperial: false,
+  gender: "Male",
+  activityLevel: BMR.get_modifiers()[0],
+  activityDesc: BMR.modifiers[BMR.get_modifiers()[0]].desc,
+  age: "",
+  ageIsValid: undefined,
+  bodyfat: "",
+  bodyfatIsValid: undefined,
+  feet: "",
+  feetIsValid: undefined,
+  inches: "",
+  inchesIsValid: undefined,
+  pounds: "",
+  poundsIsValid: undefined,
+  cm: "",
+  cmIsValid: undefined,
+  kg: "",
+  kgIsValid: undefined,
+};
+
+const validateAge = (value) => {
+  if (/^\d+$/.test(value)) {
+    let age = parseInt(value);
+    if (age > 0 && age < 110) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const validateFeet = (value) => {
+  if (/^\d+$/.test(value)) {
+    let feet = parseInt(value);
+    if (feet > 0 && feet < 8) {
+      return true;
+    }
+  }
+  return false;
+};
+const validateInches = (value) => {
+  const inches = parseFloat(value);
+  if (!isNaN(inches) && inches > 0 && inches < 12) {
+    return true;
+  }
+  return false;
+};
+
+const validateCm = (value) => {
+  const cm = parseFloat(value);
+  if (!isNaN(cm) && cm > 0 && cm < 300) {
+    return true;
+  }
+  return false;
+};
+
+const validateKg = (value) => {
+  const kg = parseFloat(value);
+  if (!isNaN(kg) && kg > 0 && kg < 300) {
+    return true;
+  }
+  return false;
+};
+
+const validatePounds = (value) => {
+  const pounds = parseFloat(value);
+  if (!isNaN(pounds) && pounds > 0 && pounds < 999) {
+    return true;
+  }
+  return false;
+};
+
+const validateBodyfat = (value) => {
+  if (value === "") {
+    return true;
+  }
+  const bodyfat = parseFloat(value);
+  if (!isNaN(bodyfat) && bodyfat > 0 && bodyfat < 100) {
+    return true;
+  }
+
+  return false;
+};
+
+const validateForm = (obj) => {
+  console.log('Validating form');
+  console.log(obj);
+  if (obj.ageIsValid && obj.bodyfatIsValid) {
+    if (obj.isImperial) {
+      if (obj.poundsIsValid && obj.inchesIsValid && obj.feetIsValid) {
+        return true;
+      }
+    } else {
+      if (obj.kgIsValid && obj.cmIsValid) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const formReducer = (state, action) => {
+  console.log(action);
+  let newstate;
+  switch (action.type) {
+    case "SET_AGE": {
+      newstate = {
+        ...state,
+        age: action.value,
+        ageIsValid: validateAge(action.value),
+      };
+      break;
+    }
+    case "AGE_BLUR": {
+      newstate = {
+        ...state,
+        ageIsValid: validateAge(action.value),
+      };
+      break;
+    }
+    case "SET_KG": {
+      newstate = {
+        ...state,
+        kg: action.value,
+        kgIsValid: validateKg(action.value),
+      };
+      break;
+    }
+    case "KG_BLUR": {
+      newstate = {
+        ...state,
+        kgIsValid: validateKg(action.value),
+      };
+      break;
+    }
+    case "SET_POUNDS": {
+      newstate = {
+        ...state,
+        pounds: action.value,
+        poundsIsValid: validatePounds(action.value),
+      };
+      break;
+    }
+    case "POUNDS_BLUR": {
+      newstate = {
+        ...state,
+        poundsIsValid: validatePounds(action.value),
+      };
+      break;
+    }
+
+    case "SET_CM": {
+      newstate = {
+        ...state,
+        cm: action.value,
+        cmIsValid: validateCm(action.value),
+      };
+      break;
+    }
+    case "CM_BLUR": {
+      newstate = {
+        ...state,
+        cmIsValid: validateCm(action.value),
+      };
+      break;
+    }
+    case "SET_INCHES": {
+      newstate = {
+        ...state,
+        inches: action.value,
+        inchesIsValid: validateInches(action.value),
+      };
+      break;
+    }
+    case "INCHES_BLUR": {
+      newstate = {
+        ...state,
+        inchesIsValid: validateInches(action.value),
+      };
+      break;
+    }
+    case "SET_FEET": {
+      newstate = {
+        ...state,
+        feet: action.value,
+        feetIsValid: validateFeet(action.value),
+      };
+      break;
+    }
+    case "FEET_BLUR": {
+      newstate = {
+        ...state,
+        feetIsValid: validateFeet(action.value),
+      };
+      break;
+    }
+   case "SET_BODYFAT": {
+      newstate = {
+        ...state,
+        bodyfat: action.value,
+        bodyfatIsValid: validateBodyfat(action.value),
+      };
+      break;
+    }
+    case "SET_ACTIVITY": {
+      newstate = {
+        ...state,
+        activityLevel: action.value,
+        activityDesc: BMR.modifiers[action.value].desc,
+      };
+      break;
+    }
+    case "BODYFAT_BLUR": {
+      newstate = {
+        ...state,
+        bodyfatIsValid: validateBodyfat(action.value),
+      };
+      break;
+    }
+    case "SET_IMPERIAL": {
+      newstate = {
+        ...state,
+        isImperial: true,
+      };
+      break;
+    }
+    case "SET_METRIC": {
+      newstate = {
+        ...state,
+        isImperial: false,
+      };
+      break;
+    }
+    default: {
+      throw new Error(`Unknown action type: ${action.type}`);
+    }
+  }
+  newstate.formIsValid = validateForm(newstate);
+  return newstate;
+};
+
 const BMRForm = () => {
-  const [isImperial, setIsImperial] = useState(true);
-  const [modifierDescription, setModifierDescription] = useState(
-    BMR.modifiers[BMR.get_modifiers()[0]].desc
-  );
-  const [isValid, setIsValid] = useState(false);
+  const [formState, dispatchForm] = useReducer(formReducer, defaultFormState);
 
-  let years;
-
-  const imperialTabClass = isImperial
+  const imperialTabClass = formState.isImperial
     ? styles["tab-active"]
     : styles["tab-inactive"];
-  const metricTabClass = isImperial
+  const metricTabClass = formState.isImperial
     ? styles["tab-inactive"]
     : styles["tab-active"];
 
-  const imperialClickHandler = () => {
-    setIsImperial(true);
-  };
-  const metricClickHandler = () => {
-    setIsImperial(false);
-  };
-  const imperialStatsHandler = (data) => {
-    console.log("imperial stats");
-    console.log(data);
-  };
-  const metricStatsHandler = (data) => {};
-  const yearsHandler = (value) => {
-    setIsValid(true);
-    console.log(`years: ${value}`);
-  };
   const genderHandler = (value) => {
     console.log(`gender: ${value}`);
   };
@@ -48,47 +266,115 @@ const BMRForm = () => {
     { value: "0", desc: "Male" },
     { value: "1", desc: "Female" },
   ];
-  const activityLevelHandler = (data) => {
-    console.log(`activity level: ${data}`);
-    setModifierDescription(BMR.modifiers[data].desc);
-  };
-  const modifiers = BMR.get_modifiers().map((X) => {
-    return { value: X, desc: X };
-  });
+
+  console.log(formState);
 
   return (
     <form>
       <ul className={styles.tabs}>
-        <li className={imperialTabClass} onClick={imperialClickHandler}>
+        <li
+          className={imperialTabClass}
+          onClick={() => {
+            dispatchForm({ type: "SET_IMPERIAL" });
+          }}
+        >
           Imperial Units
         </li>
-        <li className={metricTabClass} onClick={metricClickHandler}>
+        <li
+          className={metricTabClass}
+          onClick={() => {
+            dispatchForm({ type: "SET_METRIC" });
+          }}
+        >
           Metric Units
         </li>
       </ul>
       <div className={styles["tab-content"]}>
-        {isImperial && <Imperial onUpdateStats={imperialStatsHandler} />}
-        {!isImperial && <Metric onUpdateStats={metricStatsHandler} />}
+        {formState.isImperial && (
+          <React.Fragment>
+            <FormRow label="Height:">
+              <InputField
+                label="ft"
+                onUpdate={(value) => {
+                  dispatchForm({ type: "SET_FEET", value: value });
+                }}
+              />
+              <InputField
+                label="in"
+                onUpdate={(value) => {
+                  dispatchForm({ type: "SET_INCHES", value: value });
+                }}
+              />
+            </FormRow>
+            <FormRow label="Weight:">
+              <InputField
+                label="lb"
+                onUpdate={(value) => {
+                  dispatchForm({ type: "SET_POUNDS", value: value });
+                }}
+              />
+            </FormRow>
+          </React.Fragment>
+        )}
+        {!formState.isImperial && (
+          <React.Fragment>
+            <FormRow label="Height:">
+              <InputField
+                label="cm"
+                onUpdate={(value) => {
+                  dispatchForm({ type: "SET_CM", value: value });
+                }}
+              />
+            </FormRow>
+            <FormRow label="Weight:">
+              <InputField
+                label="kg"
+                onUpdate={(value) => {
+                  dispatchForm({ type: "SET_KG", value: value });
+                }}
+              />
+            </FormRow>
+          </React.Fragment>
+        )}
       </div>
       <div className={styles["non-tab-content"]}>
         <FormRow label="Age:">
-          <InputField label="years" onUpdate={yearsHandler} />
+          <InputField
+            label="years"
+            onUpdate={(value) => {
+              dispatchForm({ type: "SET_AGE", value: value });
+            }}
+            value={formState.age}
+          />
         </FormRow>
         <FormRow label="Gender:">
           <SelectField data={genders} onUpdate={genderHandler} />
         </FormRow>
         <FormRow label="Bodyfat:">
-          <InputField label="%" />
+          <InputField
+            label="%"
+            onUpdate={(value) => {
+              dispatchForm({ type: "SET_BODYFAT", value: value });
+            }}
+            value={formState.bodyfat}
+          />
         </FormRow>
         <FormRow label="Activity level:">
-          <SelectField data={modifiers} onUpdate={activityLevelHandler} />
+          <SelectField
+            data={BMR.get_modifiers().map((X) => {
+              return { value: X, desc: X };
+            })}
+            onUpdate={(value) => {
+              dispatchForm({ type: "SET_ACTIVITY", value: value });
+            }}
+          />
         </FormRow>
         <FormRow activity={true} label="Description:">
-          <span>{modifierDescription}</span>
+          <span>{formState.activityDesc}</span>
         </FormRow>
       </div>
       <div className={styles.button}>
-        <button disabled={!isValid} type="submit">Calculate</button>
+        <button type="submit">Calculate</button>
       </div>
     </form>
   );
