@@ -7,23 +7,33 @@ export const BMR = {
     return Object.keys(BMR.genders).sort();
   },
   modifiers: {
-    Sedentary: { value: 1.2, desc: "little or no exercise, desk job" },
+    Inactive: {
+      value: 1.16,
+      desc: "Working From Home with Little to No Travel, No Exercise, Some Walking, Mostly Sitting or Laying",
+    },
+    Sedentary: {
+      value: 1.2,
+      desc: "Sedentary Lifestyle, Little or No Exercise, Moderate Walking, Desk Job (Away from Home)",
+    },
     "Slightly active": {
       value: 1.375,
-      desc: "light exercise/ sports 1-3 days/week",
+      desc: "Exercise or Light Sports 1 to 3 Days a Week, Light Jogging or Walking 3 to 4 Days a Week",
     },
-    "Lightly active": { value: 1.425, desc: "???" },
+    "Lightly active": {
+      value: 1.425,
+      desc: "Exercise or Moderate Sports 2 to 3 Days a Week, Light Jogging or Walking 5 to 7 Days a Week",
+    },
     "Moderately active": {
       value: 1.55,
-      desc: "moderate exercise/ sports 6-7 days/week",
+      desc: "Physical Work, Exercise, or Sports 4 to 5 Days a Week, Construction Laborer",
     },
     "Very active": {
       value: 1.725,
-      desc: "hard exercise every day, or exercising 2 xs/day",
+      desc: "Heavy Physical Work, Exercise, or Sports 6 to 7 Days a Week, Hard Laborer",
     },
     "Extra active": {
       value: 1.9,
-      desc: "hard exercise 2 or more times per day, training for marathon, or triathlon, etc.",
+      desc: "Very Heavy Physical Work or Exercise Every Day, Professional/Olympic Athlete",
     },
   },
   get_modifiers: () => {
@@ -35,7 +45,8 @@ export const BMR = {
     "Harris-Benedict (Original 1919)": {
       order: 1,
       need_bf: false,
-      description: "Blah de blah blah blah",
+      description:
+        "This is the oldest set of equations by far. It was originally published in 1919. It illustrates how much the difference between men and women's energy utilization over the years has come. In our modern day and age it's much less. Some of this is due to the differences in body fat percentages but also may be attributed to the male dominated perceptions of the time.",
       calculate: (data) => {
         if (data.isMale) {
           return (
@@ -76,17 +87,9 @@ export const BMR = {
       description: "Blah de blah blah blah",
       calculate: (data) => {
         if (data.isMale) {
-          return (
-            (10 * data.weight) +
-            (6.25 * data.height) -
-            (5 * data.age) - 5
-          );
+          return 10 * data.weight + 6.25 * data.height - 5 * data.age - 5;
         } else {
-          return (
-            (10 * data.weight) +
-            (6.25 * data.height) -
-            (5 * data.age) - 161
-          );
+          return 10 * data.weight + 6.25 * data.height - 5 * data.age - 161;
         }
       },
     },
@@ -97,8 +100,8 @@ export const BMR = {
       calculate: (data) => {
         console.log("Calculating");
         console.log(data);
-        const lbm = data.weight * ( 100 - data.bodyfat ) / 100;
-        return 370 + ( 21.6 * lbm);
+        const lbm = (data.weight * (100 - data.bodyfat)) / 100;
+        return 370 + 21.6 * lbm;
       },
     },
     "Katch-McArdle (Hybrid)": {
@@ -107,16 +110,20 @@ export const BMR = {
       description: "Blah de blah blah blah",
       calculate: (data) => {
         const p = data.bodyfat / 100;
-        return (370 * (1-p)) + (21.6 * (data.weight * (1-p))) + (6.17 * (data.weight * p));
+        return (
+          370 * (1 - p) +
+          21.6 * (data.weight * (1 - p)) +
+          6.17 * (data.weight * p)
+        );
       },
     },
-    "Cunningham": {
+    Cunningham: {
       order: 6,
       need_bf: true,
       description: "Blah de blah blah blah",
       calculate: (data) => {
         const p = data.bodyfat / 100;
-        return 500 + ( 22 * ( data.weight * ( 1-p)));
+        return 500 + 22 * (data.weight * (1 - p));
       },
     },
   },
