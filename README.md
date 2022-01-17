@@ -1,13 +1,22 @@
 # React BMR
 
-This project will become a React single page application to calculate
-BMR's (Basal Metabolic Rates) using a variety of algorithms.
+This curerntly is a simple application that calculates your estimated basal metabolic rate
+using a variety of commonly known calculations.
 
-At this point it does not yet run. All it contains is a sample layout (layout.html) written in HTML and css.
-
-This is my first React application.
+This functionality was part of a health suite that I previously wrote in python/django/bootstrap.
 
 ## About me
 
-I have been programming for a long time, although it has been almost exclusively backend programming.
-This is the first front end application that I have written from the ground up.
+I have been programming both as a hobby and as a part of my profession for most of my life.
+I've almost exclusively been working within the backend, and am now stating to try to expand my
+repertoire to include frontend / full stack.
+
+This is my first react applicatoin.
+
+## Changelog
+
+*v0.9 - January 16, 2022*
+
+- Iniital (almost) Release.
+- Includes algorithms from sailrabbit.com/bmr
+- Still missing overlay with calculation notes
