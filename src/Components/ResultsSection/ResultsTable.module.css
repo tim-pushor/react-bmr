@@ -1,0 +1,29 @@
+.results {
+    width: 100%;
+  }
+  .results td:nth-child(2), 
+  .results td:nth-child(3) {
+      text-align: right;
+  }
+  .info-image {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  .results img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  
+  .results td:nth-child(1) {
+    vertical-align: middle;
+  }
+  
+  .results thead th {
+    padding: 10px 0 10px 0;
+  }
+  .results tbody td {
+    padding: 5px 0 5px 0;
+  }

@@ -8,7 +8,7 @@ import SelectField from "../Input/SelectField";
 import styles from "./BMRForm.module.css";
 import ResultsContext from "../../store/results-context.js";
 
-const debugForm = true;
+const debugForm = false;
 
 const defaultFormState = {
   formIsValid: false,

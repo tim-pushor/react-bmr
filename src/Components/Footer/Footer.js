@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div>
         <p>
-          BMR Calculator v0.1 - Copyright &copy;2021&nbsp;
+          BMR Calculator v1.0 - Copyright &copy;2022&nbsp;
           <a href="https://www.linkedin.com/in/tim-pushor-ab501299/">
             Tim Pushor
           </a>
