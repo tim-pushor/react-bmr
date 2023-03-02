@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-bmr/static/css/main.309c8ff5.chunk.css",
+    "main.js": "/react-bmr/static/js/main.cd7beb1a.chunk.js",
+    "main.js.map": "/react-bmr/static/js/main.cd7beb1a.chunk.js.map",
+    "runtime-main.js": "/react-bmr/static/js/runtime-main.6a73b867.js",
+    "runtime-main.js.map": "/react-bmr/static/js/runtime-main.6a73b867.js.map",
+    "static/js/2.39a3f1a5.chunk.js": "/react-bmr/static/js/2.39a3f1a5.chunk.js",
+    "static/js/2.39a3f1a5.chunk.js.map": "/react-bmr/static/js/2.39a3f1a5.chunk.js.map",
+    "index.html": "/react-bmr/index.html",
+    "static/css/main.309c8ff5.chunk.css.map": "/react-bmr/static/css/main.309c8ff5.chunk.css.map",
+    "static/js/2.39a3f1a5.chunk.js.LICENSE.txt": "/react-bmr/static/js/2.39a3f1a5.chunk.js.LICENSE.txt",
+    "static/media/logo.84ec89e7.png": "/react-bmr/static/media/logo.84ec89e7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6a73b867.js",
+    "static/js/2.39a3f1a5.chunk.js",
+    "static/css/main.309c8ff5.chunk.css",
+    "static/js/main.cd7beb1a.chunk.js"
+  ]
+}
