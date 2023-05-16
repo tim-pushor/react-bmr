@@ -5,7 +5,7 @@ using a variety of commonly known calculations.
 
 # Try it out
 
-A copy of this app is hosted on GitHub Pages. [Click here to try it](https://timmy-bbb.github.io/react-bmr/)
+A copy of this app is hosted on GitHub Pages. [Click here to try it](https://tim-pushor.github.io/react-bmr/)
 
 # Why ?
 
@@ -34,6 +34,6 @@ to keep this repo up for now as an example, and maybe go back and finish it one 
 
 *v0.9.0 - January 16, 2022*
 
-- Iniital Functionality
+- Initial Functionality
 - Includes algorithms from sailrabbit.com/bmr
 - Still missing overlay with calculation notes

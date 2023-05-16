@@ -14,7 +14,7 @@ const Footer = () => {
         </p>
         <p>
           Written in <a href="https://reactjs.org">React JS</a> - &nbsp;
-          <a href="https://github.com/timmy-bbb/react-bmr">Click here</a> to see
+          <a href="https://github.com/tim-pushor/react-bmr">Click here</a> to see
           the code
         </p>
       </div>
