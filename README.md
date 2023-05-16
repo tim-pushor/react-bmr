@@ -37,3 +37,4 @@ to keep this repo up for now as an example, and maybe go back and finish it one 
 - Initial Functionality
 - Includes algorithms from sailrabbit.com/bmr
 - Still missing overlay with calculation notes
+
