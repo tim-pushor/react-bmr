@@ -2,7 +2,7 @@
   "name": "react-bmr",
   "version": "0.9.9",
   "private": true,
-  "homepage": "https://timmy-bbb.github.io/react-bmr",
+  "homepage": "https://tim-pushor.github.io/react-bmr",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",

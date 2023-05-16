@@ -34,6 +34,6 @@ to keep this repo up for now as an example, and maybe go back and finish it one 
 
 *v0.9.0 - January 16, 2022*
 
-- Iniital Functionality
+- Initial Functionality
 - Includes algorithms from sailrabbit.com/bmr
 - Still missing overlay with calculation notes
