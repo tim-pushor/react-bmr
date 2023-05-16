@@ -5,7 +5,7 @@ using a variety of commonly known calculations.
 
 # Try it out
 
-A copy of this app is hosted on GitHub Pages. [Click here to try it](https://dagainz.github.io/react-bmr/)
+A copy of this app is hosted on GitHub Pages. [Click here to try it](https://tim-pushor.github.io/react-bmr/)
 
 # Why ?
 
